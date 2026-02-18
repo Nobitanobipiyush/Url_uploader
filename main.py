@@ -161,8 +161,9 @@ async def account_login(bot: Client, m: Message):
                 url = mpd
                 keys_string = " ".join([f"--key {key}" for key in keys])
             elif "edge.api.brightcove.com" in url:
-              bcov = "bcov_auth=YOURTOKEN#YOURCVTOKEN"
-                url = url.split("bcov_auth")[0]+bcov
+              elif "edge.api.brightcove.com" in url:
+    bcov = "bcov_auth=YOURTOKEN#YOURCVTOKEN"
+    url = url.split("bcov_auth")[0] + bcov
             elif "tencdn.classplusapp" in url:
                 headers = {'Host': 'api.classplusapp.com', 'x-access-token': f'{token_cp}', 'user-agent': 'Mobile-Android', 'app-version': '1.4.37.1', 'api-version': '18', 'device-id': '5d0d17ac8b3c9f51', 'device-details': '2848b866799971ca_2848b8667a33216c_SDK-30', 'accept-encoding': 'gzip'}
                 params = (('url', f'{url}'))
