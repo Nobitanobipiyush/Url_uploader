@@ -20,9 +20,9 @@ import helper
 
 # ================== CONFIG ==================
 
-BOT_TOKEN = "add"
-API_ID = add
-API_HASH = "add"
+BOT_TOKEN = "7849688808:AAEzkaCo-5e7xyKiboy0hf9WH67n7TbGtxo"
+API_ID = 25306345
+API_HASH = "b6b2b52031e29dc3164cf5f10da5806b"
 
 owner_id = [8440950205]
 auth_users = [8440950205]
