@@ -1,23 +1,22 @@
 FROM python:3.11-slim-bullseye
 
-# Set the working directory
 WORKDIR /app
-
-# Copy all files from the current directory to the container's /app directory
 COPY . .
 
-# Install necessary dependencies
-RUN apk add --no-cache \
-    gcc \
-    libffi-dev \
-    musl-dev \
+# System Dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
+    wget \
     aria2 \
-    make \
+    unzip \
+    gcc \
     g++ \
-    cmake
+    make \
+    cmake \
+    libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install Bento4
+# Install Bento4 (mp4decrypt)
 RUN wget -q https://github.com/axiomatic-systems/Bento4/archive/v1.6.0-639.zip && \
     unzip v1.6.0-639.zip && \
     cd Bento4-1.6.0-639 && \
@@ -25,13 +24,13 @@ RUN wget -q https://github.com/axiomatic-systems/Bento4/archive/v1.6.0-639.zip &
     cd build && \
     cmake .. && \
     make -j$(nproc) && \
-    cp mp4decrypt /usr/local/bin/ &&\
-    cd ../.. && \
+    cp mp4decrypt /usr/local/bin/ && \
+    cd /app && \
     rm -rf Bento4-1.6.0-639 v1.6.0-639.zip
 
-
+# Python deps
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
-    
-# Set the command to run the application
-CMD ["sh", "-c", "gunicorn app:app & python3 main.py"]
+
+# Run Bot
+CMD ["python3", "main.py"]
